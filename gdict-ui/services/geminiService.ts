@@ -1,7 +1,8 @@
 import { DictionaryEntry, WordOfTheDay, GrammarAnalysis } from "../types";
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://your-backend-url.vercel.app/api'  // Backend Vercel URL'inizi buraya yazın
+// Detect environment and use correct API URL
+const API_BASE_URL = typeof window !== 'undefined' && window.location.hostname === 'gdict.vercel.app'
+  ? 'https://BACKEND-URL-BURAYA.vercel.app/api'  // ← Backend Vercel URL'inizi buraya yazın
   : 'http://localhost:3001/api';
 
 export const lookupWord = async (word: string): Promise<DictionaryEntry> => {
