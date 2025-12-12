@@ -113,8 +113,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       key={density}
                       onClick={() => updateSettings({ uiDensity: density as '14px' | '15px' | '16px' })}
                       className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all ${isSelected
-                          ? 'bg-white dark:bg-slate-600 text-[var(--p-accent)] shadow-sm'
-                          : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                        ? 'bg-white dark:bg-slate-600 text-[var(--p-accent)] shadow-sm'
+                        : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                         }`}
                     >
                       {label}
@@ -244,7 +244,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <div className="bg-slate-50 dark:bg-white/5 rounded-3xl p-5 border border-slate-100 dark:border-white/5">
               <div className="space-y-4">
                 {/* Row 1 */}
-                <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
                     <div className="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
@@ -253,13 +253,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     </div>
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Konsept ve Vizyon</span>
                   </div>
-                  <span className="text-sm font-bold text-[var(--p-accent)] text-right">Muammer Alpaydın, Gamze Kurt</span>
+                  <div className="flex flex-col gap-1 pl-9">
+                    <span className="text-sm font-bold text-[var(--p-accent)]">Muammer Alpaydın</span>
+                    <span className="text-sm font-bold text-[var(--p-accent)]">Gamze Kurt</span>
+                  </div>
                 </div>
 
                 <div className="h-px bg-slate-200 dark:bg-white/5 w-full"></div>
 
                 {/* Row 2 */}
-                <div className="grid grid-cols-[1fr_auto] gap-4 items-center">
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2">
                     <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
@@ -268,7 +271,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     </div>
                     <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Geliştirme ve Kod</span>
                   </div>
-                  <span className="text-sm font-bold text-[var(--p-accent)] text-right">Muammer Alpaydın, Taha Koçer</span>
+                  <div className="flex flex-col gap-1 pl-9">
+                    <span className="text-sm font-bold text-[var(--p-accent)]">Muammer Alpaydın</span>
+                    <span className="text-sm font-bold text-[var(--p-accent)]">Taha Koçer</span>
+                  </div>
                 </div>
 
                 <div className="h-px bg-slate-200 dark:bg-white/5 w-full"></div>
