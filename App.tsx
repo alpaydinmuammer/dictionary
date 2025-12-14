@@ -478,7 +478,7 @@ function App() {
                         {/* Conditional Content Based on Active Tab */}
                         {activeTab === 'dictionary' ? (
                             <>
-                                <div className={`transition-all duration-500 ease-out ${searchState.status === 'idle' ? 'mt-[6vh] md:mt-[10vh]' : ''}`}>
+                                <div className="transition-all duration-500 ease-out">
 
                                     {/* 2. Main Search Box */}
                                     <SearchBar onSearch={handleSearch} isLoading={searchState.status === 'loading'} />
