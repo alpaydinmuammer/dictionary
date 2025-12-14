@@ -49,12 +49,14 @@ export interface HistoryItem {
   timestamp: number;
   frequency_score: number;
   part_of_speech: string;
+  definition_tr?: string;
 }
 
 export interface FavoriteItem {
   word: string;
   part_of_speech: string;
   frequency_score: number;
+  definition_tr?: string;
 }
 
 export interface AppSettings {

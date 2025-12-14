@@ -231,13 +231,16 @@ function App() {
                 return prev.filter(f => f.word !== entry.word);
             } else {
                 let pos = 'Unknown';
+                let definition = '';
                 if (entry.meanings && entry.meanings.length > 0) {
                     pos = entry.meanings[0].type;
+                    definition = entry.meanings[0].definition_tr;
                 }
                 const newItem: FavoriteItem = {
                     word: entry.word,
                     part_of_speech: pos,
-                    frequency_score: entry.frequency_score
+                    frequency_score: entry.frequency_score,
+                    definition_tr: definition
                 };
                 return [newItem, ...prev];
             }
@@ -256,14 +259,17 @@ function App() {
         setHistory(prev => {
             const filtered = prev.filter(item => item.word.toLowerCase() !== entry.word.toLowerCase());
             let pos = 'Unknown';
+            let definition = '';
             if (entry.meanings && entry.meanings.length > 0) {
                 pos = entry.meanings[0].type;
+                definition = entry.meanings[0].definition_tr;
             }
             const newItem: HistoryItem = {
                 word: entry.word,
                 timestamp: Date.now(),
                 frequency_score: entry.frequency_score,
-                part_of_speech: pos
+                part_of_speech: pos,
+                definition_tr: definition
             };
             return [newItem, ...filtered].slice(0, 20);
         });
@@ -407,8 +413,8 @@ function App() {
                             <button
                                 onClick={() => setActiveTab('dictionary')}
                                 className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === 'dictionary'
-                                        ? 'bg-white dark:bg-slate-800 shadow-md text-[var(--p-accent)]'
-                                        : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                                    ? 'bg-white dark:bg-slate-800 shadow-md text-[var(--p-accent)]'
+                                    : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50'
                                     }`}
                             >
                                 Dictionary
@@ -416,8 +422,8 @@ function App() {
                             <button
                                 onClick={() => setActiveTab('coach')}
                                 className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${activeTab === 'coach'
-                                        ? 'bg-white dark:bg-slate-800 shadow-md text-[var(--p-accent)]'
-                                        : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50'
+                                    ? 'bg-white dark:bg-slate-800 shadow-md text-[var(--p-accent)]'
+                                    : 'text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-slate-700/50'
                                     }`}
                             >
                                 Writing Coach
