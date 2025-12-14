@@ -25,14 +25,40 @@ const hexToRgb = (hex: string) => {
     return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '99, 102, 241';
 };
 
-// Word pool for suggested searches
+// Word pool for suggested searches (100+ sophisticated C1/C2 level words)
 const SUGGESTED_WORDS_POOL = [
+    // Row 1-10 (Original + Expanded)
     "Ubiquitous", "Serendipity", "Ephemeral", "Eloquent", "Melancholy",
     "Pragmatic", "Resilient", "Ambiguous", "Meticulous", "Perseverance",
     "Collocation", "Connotation", "Paradigm", "Nuance", "Juxtapose",
     "Inevitable", "Profound", "Audacious", "Benevolent", "Cacophony",
     "Dichotomy", "Empathy", "Gregarious", "Idiosyncrasy", "Lethargic",
-    "Omnipotent", "Quintessential", "Superfluous", "Tenacious", "Vicarious"
+    "Omnipotent", "Quintessential", "Superfluous", "Tenacious", "Vicarious",
+    // Row 11-20
+    "Aesthetic", "Ambivalent", "Catalyst", "Cognizant", "Complacent",
+    "Conundrum", "Corroborate", "Debilitate", "Delineate", "Disparate",
+    "Eloquence", "Empirical", "Enervate", "Enigmatic", "Ephemeral",
+    "Exacerbate", "Extricate", "Fastidious", "Formidable", "Fortuitous",
+    // Row 21-30
+    "Gratuitous", "Harangue", "Hegemony", "Idyllic", "Impeccable",
+    "Incessant", "Incorrigible", "Indolent", "Inexorable", "Innocuous",
+    "Insidious", "Intrepid", "Inundate", "Irrevocable", "Laconic",
+    "Magnanimous", "Malleable", "Mendacious", "Metamorphosis", "Meticulous",
+    // Row 31-40
+    "Nebulous", "Nefarious", "Obfuscate", "Obsequious", "Obstinate",
+    "Opulent", "Ostentatious", "Panacea", "Paradigm", "Parsimonious",
+    "Penchant", "Perfunctory", "Pervasive", "Phlegmatic", "Plethora",
+    "Precipitate", "Precarious", "Predilection", "Proclivity", "Propensity",
+    // Row 41-50
+    "Reconcile", "Redundant", "Relinquish", "Repudiate", "Resilience",
+    "Sagacious", "Sanguine", "Scrupulous", "Surreptitious", "Sycophant",
+    "Tantamount", "Temerity", "Transcend", "Transient", "Ubiquitous",
+    "Unequivocal", "Vicissitude", "Vindicate", "Voracious", "Zeitgeist",
+    // Row 51-60 (Phrasal verb concepts / Common advanced)
+    "Ameliorate", "Anachronism", "Antipathy", "Arcane", "Auspicious",
+    "Belligerent", "Beguile", "Brevity", "Capricious", "Clandestine",
+    "Commensurate", "Compendium", "Confluence", "Contentious", "Derivative",
+    "Didactic", "Diligent", "Duplicity", "Ebullient", "Effervescent"
 ];
 
 // Fisher-Yates shuffle and pick N items
@@ -58,7 +84,7 @@ function App() {
     const [wordOfTheDay, setWordOfTheDay] = useState<WordOfTheDay | null>(null);
 
     // Random suggested words - changes on each page load
-    const suggestedWords = useMemo(() => getRandomWords(SUGGESTED_WORDS_POOL, 4), []);
+    const suggestedWords = useMemo(() => getRandomWords(SUGGESTED_WORDS_POOL, 6), []);
 
     // Settings State
     const [settings, setSettings] = useState<AppSettings>(() => {
@@ -452,7 +478,7 @@ function App() {
                         {/* Conditional Content Based on Active Tab */}
                         {activeTab === 'dictionary' ? (
                             <>
-                                <div className={`transition-all duration-500 ease-out ${searchState.status === 'idle' ? 'md:mt-[10vh]' : ''}`}>
+                                <div className={`transition-all duration-500 ease-out ${searchState.status === 'idle' ? 'md:mt-[18vh]' : ''}`}>
 
                                     {/* 2. Main Search Box */}
                                     <SearchBar onSearch={handleSearch} isLoading={searchState.status === 'loading'} />
@@ -461,14 +487,25 @@ function App() {
                                     {searchState.status === 'idle' && (
                                         <>
                                             {/* 3. Suggested Query Tags */}
-                                            <div className="flex flex-wrap justify-center gap-2 mt-4 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-                                                {suggestedWords.map((tag) => (
+                                            <div className="flex flex-wrap justify-center gap-2.5 mt-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+                                                {suggestedWords.map((tag, index) => (
                                                     <button
                                                         key={tag}
                                                         onClick={() => handleSearch(tag)}
-                                                        className="px-3 py-1 text-xs font-medium rounded-full border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-[var(--p-accent)] hover:text-[var(--p-accent)] hover:bg-[var(--p-accent)]/5 transition-all"
+                                                        className="group relative px-4 py-2 text-sm font-semibold rounded-xl 
+                                                            bg-gradient-to-br from-white/80 to-white/40 dark:from-slate-800/80 dark:to-slate-800/40
+                                                            backdrop-blur-md border border-white/50 dark:border-white/10
+                                                            text-slate-700 dark:text-slate-200
+                                                            hover:border-[var(--p-accent)]/50 hover:shadow-lg hover:shadow-[var(--p-accent)]/20
+                                                            hover:scale-105 hover:-translate-y-0.5
+                                                            transition-all duration-300 ease-out"
+                                                        style={{ animationDelay: `${index * 50}ms` }}
                                                     >
-                                                        {tag}
+                                                        <span className="relative z-10 flex items-center gap-1.5">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--p-accent)] opacity-60 group-hover:opacity-100 transition-opacity"></span>
+                                                            {tag}
+                                                        </span>
+                                                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[var(--p-accent)]/0 to-[var(--p-accent)]/0 group-hover:from-[var(--p-accent)]/5 group-hover:to-[var(--p-accent)]/10 transition-all duration-300"></div>
                                                     </button>
                                                 ))}
                                             </div>
