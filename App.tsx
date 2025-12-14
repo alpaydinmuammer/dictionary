@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { SearchBar } from './components/SearchBar';
 import { ResultCard } from './components/ResultCard';
 import { Sidebar } from './components/Sidebar';
@@ -25,6 +25,22 @@ const hexToRgb = (hex: string) => {
     return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '99, 102, 241';
 };
 
+// Word pool for suggested searches
+const SUGGESTED_WORDS_POOL = [
+    "Ubiquitous", "Serendipity", "Ephemeral", "Eloquent", "Melancholy",
+    "Pragmatic", "Resilient", "Ambiguous", "Meticulous", "Perseverance",
+    "Collocation", "Connotation", "Paradigm", "Nuance", "Juxtapose",
+    "Inevitable", "Profound", "Audacious", "Benevolent", "Cacophony",
+    "Dichotomy", "Empathy", "Gregarious", "Idiosyncrasy", "Lethargic",
+    "Omnipotent", "Quintessential", "Superfluous", "Tenacious", "Vicarious"
+];
+
+// Fisher-Yates shuffle and pick N items
+const getRandomWords = (pool: string[], count: number): string[] => {
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+};
+
 function App() {
     const [activeTab, setActiveTab] = useState<'dictionary' | 'coach'>('dictionary');
     const [searchState, setSearchState] = useState<SearchState>({
@@ -40,6 +56,9 @@ function App() {
     const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [wordOfTheDay, setWordOfTheDay] = useState<WordOfTheDay | null>(null);
+
+    // Random suggested words - changes on each page load
+    const suggestedWords = useMemo(() => getRandomWords(SUGGESTED_WORDS_POOL, 4), []);
 
     // Settings State
     const [settings, setSettings] = useState<AppSettings>(() => {
@@ -443,7 +462,7 @@ function App() {
                                         <>
                                             {/* 3. Suggested Query Tags */}
                                             <div className="flex flex-wrap justify-center gap-2 mt-4 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
-                                                {["Ubiquitous", "Serendipity", "Collocation", "Phrasal Verb"].map((tag) => (
+                                                {suggestedWords.map((tag) => (
                                                     <button
                                                         key={tag}
                                                         onClick={() => handleSearch(tag)}
